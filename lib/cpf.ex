@@ -92,7 +92,7 @@ defmodule Cpf do
   """
   def gerar_cpf() do
     numero =  Enum.random(1..999999999) |> Integer.to_string
-    numero <> gerar_digito(numero)
+    numero <> gerar_digito(numero) |> String.pad_leading(11, "0")
   end
 
   defp todos_digito_sao_iguais(list) when is_list(list) do
