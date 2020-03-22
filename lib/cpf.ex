@@ -37,8 +37,14 @@ defmodule Cpf do
       iex> Cpf.is_valid("00000000000")
       {:error, "Cpf é inválido", "00000000000"}
 
+      iex> Cpf.is_valid(Cpf.new(07834965085))
+      {:ok, "Válido"}
   """
   def is_valid(cpf)
+
+  def is_valid (%{number: value}) do
+    is_valid(value)
+  end
 
   def is_valid(cpf) when is_binary(cpf) do
     is_valid(String.to_integer(cpf))
