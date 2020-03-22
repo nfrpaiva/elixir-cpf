@@ -59,15 +59,40 @@ defmodule Cpf do
 
   end
 
+  @doc """
+  Gera o digito verificador
+
+  ## Examples
+      iex> Cpf.gerar_digito("078349650")
+      "85"
+      iex> Cpf.gerar_digito("999999999")
+      {:erro, "Todos os dígitos não podem ser iguais"}
+  """
+
+  @spec gerar_digito(binary | integer) :: String.t
+  def gerar_digito(numero)
+
   def gerar_digito(numero) when is_binary(numero) do
     String.to_integer(numero) |> gerar_digito
   end
 
   def gerar_digito(numero) when is_number(numero) do
     numero = Integer.digits(numero)
-    digito =  gerar_list_digito(numero)
-    Enum.map(digito, fn x -> Integer.to_string(x) end)
-      |> Enum.reduce(fn b,a -> a <> b end)
+
+    if (todos_digito_sao_iguais(numero)) do
+      {:erro, "Todos os dígitos não podem ser iguais"}
+    else
+      digito =  gerar_list_digito(numero)
+      Enum.map(digito, fn x -> Integer.to_string(x) end) |> Enum.reduce(fn b,a -> a <> b end)
+    end
+  end
+
+  @doc """
+  Gera um número de cpf aleatório
+  """
+  def gerar_cpf() do
+    numero =  Enum.random(1..999999999) |> Integer.to_string
+    numero <> gerar_digito(numero)
   end
 
   defp todos_digito_sao_iguais(list) when is_list(list) do
