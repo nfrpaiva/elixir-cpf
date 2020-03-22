@@ -3,7 +3,6 @@ defmodule CpfTest do
   doctest Cpf
 
   @cpf_ok {:ok, "Válido"}
-  @cpf_nao_ok {:error, "Cpf é inválido", 28_191_575_801}
 
   test "create new cpf by integer" do
     assert %Cpf{number: 1} == Cpf.new(1)
@@ -18,7 +17,7 @@ defmodule CpfTest do
   end
 
   test "cpf é valido" do
-    assert Cpf.is_valid(28_191_575_809) == @cpf_ok
+    assert Cpf.is_valid(28191575809) == @cpf_ok
   end
 
   test "cpf é valido como string" do
@@ -34,15 +33,15 @@ defmodule CpfTest do
   end
 
   test "cpf 078.349.650-85 é válido" do
-    assert Cpf.is_valid(7_834_965_085) == @cpf_ok
+    assert Cpf.is_valid(7834965085) == @cpf_ok
   end
 
   test "cpf é não é valido" do
-    refute Cpf.is_valid(28_191_575_801) == @cpf_ok
+    refute Cpf.is_valid(28191575801) == @cpf_ok
   end
 
   test "cpf inválido, com mensagem de erro correta" do
-    assert Cpf.is_valid(28_191_575_801) == @cpf_nao_ok
+    assert Cpf.is_valid(28191575801) == {:error, "Cpf é inválido", "28191575801"}
   end
 
   test "Gerar digito verificador" do
