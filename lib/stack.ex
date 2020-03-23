@@ -20,8 +20,8 @@ defmodule Stack do
     {:noreply, [element | state]}
   end
 
-  def gerar_cpf(server) do
-    GenServer.call(server, {:gerar_cpf})
+  def gerar_cpf() do
+    GenServer.call(__MODULE__, {:gerar_cpf})
   end
 
 end
