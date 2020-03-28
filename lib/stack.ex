@@ -1,13 +1,13 @@
 defmodule Stack do
   use GenServer
 
-  @impl true
-  def init(:ok) do
-    {:ok, %{}}
+  def start_link(_ \\ []) do
+    GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  def start_link(opts) do
-    GenServer.start_link(__MODULE__, :ok, opts)
+  @impl true
+  def init(state) do
+    {:ok, state}
   end
 
   @impl true
