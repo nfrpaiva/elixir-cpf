@@ -1,8 +1,8 @@
 defmodule Cpf.Supervisor do
   use Supervisor
 
-  def start_link do
-    Supervisor.start_link(__MODULE__, [])
+  def start_link() do
+    Supervisor.start_link(__MODULE__, [], name: Cpf.Supervisor)
   end
 
   @impl true
