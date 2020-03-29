@@ -97,8 +97,13 @@ defmodule Cpf do
   Gera um número de cpf aleatório
   """
   def gerar_cpf() do
-    numero =  Enum.random(1..999999999) |> Integer.to_string
-    numero <> gerar_digito(numero) |> String.pad_leading(11, "0")
+    rand_numero = Enum.random(1..999999999)
+    if todos_digito_sao_iguais(Integer.digits(rand_numero)) do
+      gerar_cpf()
+    else
+      numero = rand_numero |> Integer.to_string
+      numero <> gerar_digito(numero) |> String.pad_leading(11, "0")
+    end
   end
 
   defp todos_digito_sao_iguais(list) when is_list(list) do
