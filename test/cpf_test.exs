@@ -17,7 +17,7 @@ defmodule CpfTest do
   end
 
   test "cpf é valido" do
-    assert Cpf.is_valid(28191575809) == @cpf_ok
+    assert Cpf.is_valid(28_191_575_809) == @cpf_ok
   end
 
   test "cpf é valido como string" do
@@ -33,18 +33,29 @@ defmodule CpfTest do
   end
 
   test "cpf 078.349.650-85 é válido" do
-    assert Cpf.is_valid(7834965085) == @cpf_ok
+    assert Cpf.is_valid(7_834_965_085) == @cpf_ok
   end
 
   test "cpf é não é valido" do
-    refute Cpf.is_valid(28191575801) == @cpf_ok
+    refute Cpf.is_valid(28_191_575_801) == @cpf_ok
   end
 
   test "cpf inválido, com mensagem de erro correta" do
-    assert Cpf.is_valid(28191575801) == {:error, "Cpf é inválido", "28191575801"}
+    assert Cpf.is_valid(28_191_575_801) == {:error, "Cpf é inválido", "28191575801"}
   end
 
   test "Gerar digito verificador" do
     assert Cpf.gerar_digito(281_915_758) == "09"
+  end
+
+  test "Gerar um cpf aleatório" do
+    numero = Cpf.gerar_cpf()
+    assert String.length(numero) == 11
+  end
+
+  test "gerar varios cpfs" do
+    size = 10
+    lista_numeros = Cpf.gerar_cpf(size)
+    assert length(lista_numeros) == size
   end
 end
