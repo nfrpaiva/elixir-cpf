@@ -104,8 +104,17 @@ defmodule Cpf do
     end
   end
 
-  def gerar_cpf(size) when is_integer(size) do
-    Enum.map(1..size, fn _ -> Cpf.gerar_cpf() end)
+  def gerar_cpf(quantidade_cpfs, processos \\ 1)
+
+  def gerar_cpf(quantidade_cpfs, processos) when is_integer(quantidade_cpfs) and processos > 1 do
+    Cpf.Math.split_div(quantidade_cpfs, processos)
+    |> Enum.map(fn quantidade_cpfs -> Task.async(fn -> gerar_cpf(quantidade_cpfs) end) end)
+    |> Enum.map(fn pid -> Task.await(pid, 60 * 1000 * 10) end)
+    |> Enum.reduce(fn a, b -> a ++ b end)
+  end
+
+  def gerar_cpf(quantidade_cpfs, processos) when is_integer(quantidade_cpfs) and processos == 1 do
+    Enum.map(1..quantidade_cpfs, fn _ -> Cpf.gerar_cpf() end)
   end
 
   defp todos_digito_sao_iguais(list) when is_list(list) do
@@ -141,11 +150,6 @@ defmodule Cpf do
     |> digito
   end
 
-  defp digito(resto) do
-    if resto <= 1 do
-      0
-    else
-      11 - resto
-    end
-  end
+  defp digito(resto) when resto <= 1, do: 0
+  defp digito(resto), do: 11 - resto
 end
