@@ -7,7 +7,7 @@ defmodule StackTest do
   #end
 
   test "cpf gerado aleatório" do
-      assert is_binary(Stack.gerar_cpf)
+      assert is_binary(Stack.gerar)
   end
 
 end

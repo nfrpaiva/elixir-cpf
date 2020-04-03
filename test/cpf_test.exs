@@ -49,13 +49,13 @@ defmodule CpfTest do
   end
 
   test "Gerar um cpf aleatório" do
-    numero = Cpf.gerar_cpf()
+    numero = Cpf.gerar()
     assert String.length(numero) == 11
   end
 
   test "gerar varios cpfs" do
     size = 10
-    lista_numeros = Cpf.gerar_cpf(size)
+    lista_numeros = Cpf.gerar(size)
     assert length(lista_numeros) == size
   end
 end

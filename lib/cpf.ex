@@ -93,28 +93,28 @@ defmodule Cpf do
   @doc """
   Gera um número de cpf aleatório
   """
-  def gerar_cpf() do
+  def gerar() do
     rand_numero = Enum.random(1..999_999_999)
 
     if todos_digito_sao_iguais(Integer.digits(rand_numero)) do
-      gerar_cpf()
+      gerar()
     else
       numero = rand_numero |> Integer.to_string()
       (numero <> gerar_digito(numero)) |> String.pad_leading(11, "0")
     end
   end
 
-  def gerar_cpf(quantidade_cpfs, processos \\ 1)
+  def gerar(quantidade_cpfs, processos \\ 1)
 
-  def gerar_cpf(quantidade_cpfs, processos) when is_integer(quantidade_cpfs) and processos > 1 do
+  def gerar(quantidade_cpfs, processos) when is_integer(quantidade_cpfs) and processos > 1 do
     Cpf.Math.split_div(quantidade_cpfs, processos)
-    |> Enum.map(fn quantidade_cpfs -> Task.async(fn -> gerar_cpf(quantidade_cpfs) end) end)
+    |> Enum.map(fn quantidade_cpfs -> Task.async(fn -> gerar(quantidade_cpfs) end) end)
     |> Enum.map(fn pid -> Task.await(pid, 60 * 1000 * 10) end)
     |> Enum.reduce(fn a, b -> a ++ b end)
   end
 
-  def gerar_cpf(quantidade_cpfs, processos) when is_integer(quantidade_cpfs) and processos == 1 do
-    Enum.map(1..quantidade_cpfs, fn _ -> Cpf.gerar_cpf() end)
+  def gerar(quantidade_cpfs, processos) when is_integer(quantidade_cpfs) and processos == 1 do
+    Enum.map(1..quantidade_cpfs, fn _ -> Cpf.gerar() end)
   end
 
   defp todos_digito_sao_iguais(list) when is_list(list) do

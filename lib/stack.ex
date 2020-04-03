@@ -11,8 +11,8 @@ defmodule Stack do
   end
 
   @impl true
-  def handle_call({:gerar_cpf}, _from, state) do
-    {:reply, Cpf.gerar_cpf(), state}
+  def handle_call({:gerar}, _from, state) do
+    {:reply, Cpf.gerar(), state}
   end
 
   @impl true
@@ -20,8 +20,8 @@ defmodule Stack do
     {:noreply, [element | state]}
   end
 
-  def gerar_cpf() do
-    GenServer.call(__MODULE__, {:gerar_cpf})
+  def gerar() do
+    GenServer.call(__MODULE__, {:gerar})
   end
 
 end
