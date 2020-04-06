@@ -4,13 +4,9 @@ defmodule Cpf.Math do
   end
 
   def split_div(dividendo, divisor) do
-    quociente = div(dividendo, divisor)
-
-    list =
+    [head | tail] =
       1..divisor
-      |> Enum.map(fn _x -> quociente end)
-
-    [head | tail] = list
+      |> Enum.map(fn _x -> div(dividendo, divisor) end)
 
     [head + rem(dividendo, divisor)] ++ tail
   end
