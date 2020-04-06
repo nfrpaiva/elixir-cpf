@@ -1,4 +1,8 @@
 defmodule Cpf.Math do
+  def split_div(dividendo, divisor) when dividendo < divisor do
+    [dividendo]
+  end
+
   def split_div(dividendo, divisor) do
     quociente = div(dividendo, divisor)
 
