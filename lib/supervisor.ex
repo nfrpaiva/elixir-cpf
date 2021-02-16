@@ -10,6 +10,7 @@ defmodule Cpf.Supervisor do
     children = [
       {Stack, name: Stack}
     ]
+
     Supervisor.init(children, strategy: :one_for_one)
   end
 end

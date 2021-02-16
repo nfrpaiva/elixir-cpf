@@ -23,5 +23,4 @@ defmodule Stack do
   def gerar() do
     GenServer.call(__MODULE__, {:gerar})
   end
-
 end
