@@ -10,9 +10,12 @@ defmodule Stack do
     {:ok, state}
   end
 
-  @impl true
-  def handle_call({:gerar}, _from, state) do
-    {:reply, Cpf.gerar(), state}
+  def gerar() do
+    GenServer.call(__MODULE__, {:gerar})
+  end
+
+  def gerar(quantidade, processos \\ 1) when is_integer(quantidade) do
+    GenServer.call(__MODULE__, {:gerar, quantidade, processos}, :infinity)
   end
 
   @impl true
@@ -20,7 +23,13 @@ defmodule Stack do
     {:noreply, [element | state]}
   end
 
-  def gerar() do
-    GenServer.call(__MODULE__, {:gerar})
+  @impl true
+  def handle_call({:gerar}, _from, state) do
+    {:reply, Cpf.gerar(), state}
+  end
+
+  @impl true
+  def handle_call({:gerar, quantidade, processos}, _from, state) do
+    {:reply, Cpf.gerar(quantidade, processos), state}
   end
 end
